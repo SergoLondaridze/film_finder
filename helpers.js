@@ -14,6 +14,11 @@ const getSelectedGenre = () => {
     const selectedGenre = document.getElementById('genres').value;
     return selectedGenre;
 };
+// Returns the current Page
+const getSelectedGenrePage =() => {
+    const randomNum=Math.floor(Math.random()*(500))+1;
+    return randomNum;
+};
 
 // Displays the like and dislike buttons on the page
 const showBtns = () => {
@@ -32,11 +37,8 @@ const clearCurrentMovie = () => {
 // After liking a movie, clears the current movie from the screen and gets another random movie
 const likeArr=[];
 const likeMovie = (info) => {
-    //likeArr.push(1);
     clearCurrentMovie();
     showRandomMovie();
-   // console.log(info.title);
-    //console.log(likeArr);
 };
 
 // After disliking a movie, clears the current movie from the screen and gets another random movie
