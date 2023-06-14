@@ -1,7 +1,6 @@
 // Populate dropdown menu with all the available genres
 const populateGenreDropdown = (genres) => {
-    const select = document.getElementById('genres')
-
+    const select = document.getElementById('genres');
     for (const genre of genres) {
         let option = document.createElement("option");
         option.value = genre.id;
@@ -31,12 +30,17 @@ const clearCurrentMovie = () => {
 }
 
 // After liking a movie, clears the current movie from the screen and gets another random movie
-const likeMovie = () => {
+const likeArr=[];
+const likeMovie = (info) => {
+    //likeArr.push(1);
     clearCurrentMovie();
     showRandomMovie();
+   // console.log(info.title);
+    //console.log(likeArr);
 };
 
 // After disliking a movie, clears the current movie from the screen and gets another random movie
+const dislikeArr=[];
 const dislikeMovie = () => {
     clearCurrentMovie();
     showRandomMovie();
@@ -89,13 +93,67 @@ const displayMovie = (movieInfo) => {
     const moviePoster = createMoviePoster(movieInfo.poster_path);
     const titleHeader = createMovieTitle(movieInfo.title);
     const overviewText = createMovieOverview(movieInfo.overview);
-  
+   
+
+    let date = document.createElement('p');
+    date.innerHTML =`<p>Release Date: ${movieInfo.release_date}</p>`;
+   
     // Append title, poster, and overview to page
     moviePosterDiv.appendChild(moviePoster);
     movieTextDiv.appendChild(titleHeader);
     movieTextDiv.appendChild(overviewText);
+     
+     const production=document.createElement('span')
+     production.innerHTML =`<span>Production Countries : </span>`;
+     movieTextDiv.appendChild(production); 
+     for (const country of movieInfo.production_countries) {
+         let count = document.createElement('span');
+         production.innerHTML+=country.name+"; ";
+         movieTextDiv.appendChild(count);
+     }
+
+    movieTextDiv.appendChild(date);
   
     showBtns();
-    likeBtn.onclick = likeMovie;
-    dislikeBtn.onclick = dislikeMovie;
+    likeBtn.onclick = ()=>{
+        if(!likeArr.includes(movieInfo.title)){
+            likeArr.push(movieInfo.title);
+        }
+        likeMovie();
+       // console.log(likeArr);
+    };
+    dislikeBtn.onclick = ()=>{
+         if(!dislikeArr.includes(movieInfo.title)){
+            dislikeArr.push(movieInfo.title);
+        }
+        dislikeMovie();
+    }
+
+    const filmcontainer=document.createElement('div');
+    movieTextDiv.appendChild(filmcontainer);
+    filmcontainer.classList.add("filmcontainer");
+    
+    const likediv=document.createElement('div');
+    filmcontainer.appendChild(likediv);
+    
+    const dislikediv=document.createElement('div');
+    filmcontainer.appendChild(dislikediv);
+
+    const likedTitle=document.createElement('h3');
+    likedTitle.innerHTML='Liked Movies ;';
+    likediv.appendChild(likedTitle);
+    for (const film of likeArr) {
+        const liked=document.createElement('p');
+        liked.innerHTML=film;
+        likediv.appendChild(liked);
+    }
+
+    const dislikeTitle=document.createElement('h3');
+    dislikeTitle.innerHTML='Disliked Movies ;';
+    dislikediv.appendChild(dislikeTitle);
+    for (const film of dislikeArr) {
+        const dislike=document.createElement('p');
+        dislike.innerHTML=film;
+        dislikediv.appendChild(dislike);
+    }
 };

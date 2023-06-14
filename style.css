@@ -82,3 +82,8 @@ select {
   background-color: #c74a4a;
   color: #910000;
 }
+
+.filmcontainer{
+  display: flex;
+  justify-content: space-between;
+}

@@ -10,9 +10,7 @@ const getGenres = async () => {
     const response = await fetch(urlToFetch);
     if (response.ok) {
       const jsonResponse = await response.json();
-      console.log(jsonResponse);
       const genres = jsonResponse.genres;
-      console.log(genres);
       return genres;
     }
   } catch (er) {
@@ -63,8 +61,9 @@ const showRandomMovie = async () => {
   const movies = await getMovies();
   const randomMovie = getRandomMovie(movies);
   const info = await getMovieInfo(randomMovie);
+//   console.log(info);
   displayMovie(info);
 };
-
+showRandomMovie();
 getGenres().then(populateGenreDropdown);
 playBtn.onclick = showRandomMovie;
